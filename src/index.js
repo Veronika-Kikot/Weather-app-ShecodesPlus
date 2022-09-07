@@ -34,6 +34,7 @@ let dateTime = document.querySelector("#date-time");
 dateTime.innerHTML = message;
 
 let temp = document.querySelector("#temp-number");
+
 // let number = 17;
 // temp.innerHTML = `${number}ºC`;
 
@@ -55,29 +56,28 @@ let temp = document.querySelector("#temp-number");
 // cels.addEventListener("click", celsSwitch);
 
 // Week 5
-// let precipitation = document.querySelector("#precipitation");
 let humidity = document.querySelector("#humidity");
 let wind = document.querySelector("#wind");
 let description = document.querySelector("#description");
+let city = document.querySelector(".form-control");
+let h2 = document.querySelector("h2");
 
 let apiKey = "c95d60a1e3adbeb286133f1ebebc2579";
-function showTempCity(response) {
-  let temperature = Math.round(response.data.main.temp);
-  temp.innerHTML = `${temperature}ºC`;
 
-  // precipitation.innerHTML = response.data.main;
-  humidity.innerHTML = response.data.main.humidity;
-  wind.innerHTML = Math.round(response.data.wind.speed);
-  description.innerHTML = response.data.weather[0].description;
-}
+// function showTempCity(response) {
+//   let temperature = Math.round(response.data.main.temp);
+//   temp.innerHTML = `${temperature}ºC`;
+
+//   // precipitation.innerHTML = response.data.main;
+//   humidity.innerHTML = response.data.main.humidity;
+//   wind.innerHTML = Math.round(response.data.wind.speed);
+//   description.innerHTML = response.data.weather[0].description;
+// }
 
 function enterCity(event) {
   event.preventDefault();
-  let city = document.querySelector(".form-control");
-  let h2 = document.querySelector("h2");
-  h2.innerHTML = city.value;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(showTempCity);
+  axios.get(apiUrl).then(showTemp);
 }
 
 let form = document.querySelector("form");
@@ -92,16 +92,15 @@ function location(position) {
 }
 function showTemp(response) {
   let temperature = Math.round(response.data.main.temp);
-  temp.innerHTML = `${temperature}ºC`;
-  let h2 = document.querySelector("h2");
   let location = response.data.name;
+  temp.innerHTML = `${temperature}ºC`;
   h2.innerHTML = location;
-  // precipitation.innerHTML = response.data.main;
   humidity.innerHTML = response.data.main.humidity;
   wind.innerHTML = Math.round(response.data.wind.speed);
   description.innerHTML = response.data.weather[0].main;
 }
-function currentLocation() {
+function currentLocation(event) {
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(location);
 }
 
