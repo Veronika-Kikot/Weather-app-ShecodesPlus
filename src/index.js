@@ -84,7 +84,7 @@ let form = document.querySelector("form");
 form.addEventListener("submit", enterCity);
 
 // Bonus
-function location(position) {
+function showlocation(position) {
   let lat = position.coords.latitude;
   let long = position.coords.longitude;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
@@ -92,16 +92,16 @@ function location(position) {
 }
 function showTemp(response) {
   let temperature = Math.round(response.data.main.temp);
-  let location = response.data.name;
+  let myLoc = response.data.name;
   temp.innerHTML = `${temperature}ºC`;
-  h2.innerHTML = location;
+  h2.innerHTML = myLoc;
   humidity.innerHTML = response.data.main.humidity;
   wind.innerHTML = Math.round(response.data.wind.speed);
   description.innerHTML = response.data.weather[0].main;
 }
 function currentLocation(event) {
   event.preventDefault();
-  navigator.geolocation.getCurrentPosition(location);
+  navigator.geolocation.getCurrentPosition(showlocation);
 }
 
 let currentBtn = document.querySelector("#current");
